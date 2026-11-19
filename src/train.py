@@ -15,6 +15,11 @@ import os
 import sys
 import time
 from pathlib import Path
+
+base_dir = Path(__file__).resolve().parent.parent
+if str(base_dir) not in sys.path:
+    sys.path.insert(0, str(base_dir))
+
 from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
@@ -99,6 +104,7 @@ def validate(
     dataloader: DataLoader,
     criterion: nn.Module,
     device: torch.device,
+    max_batches: Optional[int] = None,
 ) -> Dict[str, float]:
     """Evaluate model on validation or testing dataset."""
     model.eval()
@@ -108,7 +114,9 @@ def validate(
     total = 0
 
     with torch.no_grad():
-        for images, labels in dataloader:
+        for b_idx, (images, labels) in enumerate(dataloader):
+            if max_batches is not None and b_idx >= max_batches:
+                break
             images = images.to(device, non_blocking=True)
             labels = labels.to(device, non_blocking=True)
 

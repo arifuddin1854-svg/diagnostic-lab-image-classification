@@ -230,3 +230,10 @@ data/processed/*
 !data/processed/.gitkeep
 !data/processed/*.md
 
+# Model weights (binary checkpoints exceed GitHub 100MB single-file push limit)
+models/*.pth
+models/*.pt
+models/*.bin
+models/*.onnx
+!models/.gitkeep
+
