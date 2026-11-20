@@ -116,6 +116,7 @@ def predict_dataloader(
     model: nn.Module,
     dataloader: DataLoader,
     device: Optional[torch.device] = None,
+    max_batches: Optional[int] = None,
 ) -> Tuple[np.ndarray, np.ndarray, float]:
     """Run model inference across a DataLoader.
 
@@ -135,7 +136,9 @@ def predict_dataloader(
     total_samples = 0
 
     with torch.no_grad():
-        for images, labels in dataloader:
+        for b_idx, (images, labels) in enumerate(dataloader):
+            if max_batches is not None and b_idx >= max_batches:
+                break
             images = images.to(device, non_blocking=True)
             labels = labels.to(device, non_blocking=True)
 

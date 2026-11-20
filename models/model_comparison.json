@@ -1,0 +1,48 @@
+{
+  "resnet50": {
+    "architecture": "resnet50",
+    "accuracy": 0.6823,
+    "precision": 1.0,
+    "recall": 0.5793,
+    "specificity": 1.0,
+    "f1": 0.7336,
+    "loss": 0.4484,
+    "roc_auc": 0.9554,
+    "total_params": 24558146,
+    "trainable_params": 1050114,
+    "latency_ms": 52.12,
+    "confusion_matrix": [
+      [
+        47,
+        0
+      ],
+      [
+        61,
+        84
+      ]
+    ]
+  },
+  "densenet121": {
+    "architecture": "densenet121",
+    "accuracy": 0.8073,
+    "precision": 0.9655,
+    "recall": 0.7724,
+    "specificity": 0.9149,
+    "f1": 0.8582,
+    "loss": 0.3856,
+    "roc_auc": 0.9539,
+    "total_params": 7479682,
+    "trainable_params": 525826,
+    "latency_ms": 52.58,
+    "confusion_matrix": [
+      [
+        43,
+        4
+      ],
+      [
+        33,
+        112
+      ]
+    ]
+  }
+}
