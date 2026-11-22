@@ -1,0 +1,9 @@
+{
+  "best_epoch": 4,
+  "best_val_loss": 0.47362564504146576,
+  "peak_recall": 0.9586,
+  "peak_f1": 0.9392,
+  "best_accuracy": 0.8854,
+  "final_learning_rate": 0.0001,
+  "early_stopped": false
+}
