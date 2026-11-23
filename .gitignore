@@ -237,3 +237,8 @@ models/*.bin
 models/*.onnx
 !models/.gitkeep
 
+# Experiment Tracking (MLflow & W&B local artifacts)
+mlruns/
+.trash/
+wandb/
+

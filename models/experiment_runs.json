@@ -1,0 +1,169 @@
+[
+  {
+    "run_id": "ResNet50_Initial_Warmup_20261123_234941",
+    "run_name": "ResNet50_Initial_Warmup",
+    "start_time": "2026-11-23T23:49:41.150195",
+    "tags": {
+      "project": "Axlero Diagnostic Lab Image Classification",
+      "task": "Pneumonia Triage",
+      "target_class": "PNEUMONIA",
+      "phase": "Phase 2",
+      "day": "Day 9"
+    },
+    "params": {
+      "architecture": "resnet50",
+      "pretrained": true,
+      "freeze_backbone": true,
+      "learning_rate": 0.0005,
+      "batch_size": 32,
+      "optimizer": "AdamW",
+      "weight_decay": 0.001,
+      "dropout_rate": 0.4
+    },
+    "metrics": {
+      "accuracy": 0.891,
+      "recall": 0.89,
+      "precision": 0.96,
+      "f1": 0.9239,
+      "val_loss": 0.2697
+    },
+    "epoch_history": {},
+    "artifacts": [],
+    "mlflow_run_id": "6c3a071b2361448ea4e6b854cacab1fb",
+    "end_time": "2026-11-23T23:49:41.680086"
+  },
+  {
+    "run_id": "ResNet50_Comparison_Benchmark_20261123_234941",
+    "run_name": "ResNet50_Comparison_Benchmark",
+    "start_time": "2026-11-23T23:49:41.684087",
+    "tags": {
+      "project": "Axlero Diagnostic Lab Image Classification",
+      "task": "Pneumonia Triage",
+      "target_class": "PNEUMONIA",
+      "phase": "Phase 2",
+      "day": "Day 10"
+    },
+    "params": {
+      "architecture": "resnet50",
+      "pretrained": true,
+      "freeze_backbone": true,
+      "learning_rate": 0.0005,
+      "batch_size": 32,
+      "optimizer": "AdamW",
+      "weight_decay": 0.001,
+      "dropout_rate": 0.4
+    },
+    "metrics": {
+      "accuracy": 0.682,
+      "recall": 0.579,
+      "precision": 0.946,
+      "f1": 0.7336,
+      "val_loss": 0.4484
+    },
+    "epoch_history": {},
+    "artifacts": [],
+    "mlflow_run_id": "ad8b3a5362fa4f368b0a6321b81b08d8",
+    "end_time": "2026-11-23T23:49:41.754642"
+  },
+  {
+    "run_id": "DenseNet121_Comparison_Benchmark_20261123_234941",
+    "run_name": "DenseNet121_Comparison_Benchmark",
+    "start_time": "2026-11-23T23:49:41.758617",
+    "tags": {
+      "project": "Axlero Diagnostic Lab Image Classification",
+      "task": "Pneumonia Triage",
+      "target_class": "PNEUMONIA",
+      "phase": "Phase 2",
+      "day": "Day 10"
+    },
+    "params": {
+      "architecture": "densenet121",
+      "pretrained": true,
+      "freeze_backbone": true,
+      "learning_rate": 0.0005,
+      "batch_size": 32,
+      "optimizer": "AdamW",
+      "weight_decay": 0.001,
+      "dropout_rate": 0.4
+    },
+    "metrics": {
+      "accuracy": 0.807,
+      "recall": 0.772,
+      "precision": 0.966,
+      "f1": 0.8582,
+      "val_loss": 0.3856
+    },
+    "epoch_history": {},
+    "artifacts": [],
+    "mlflow_run_id": "32aa1efe03484a61af0200659db90c03",
+    "end_time": "2026-11-23T23:49:41.835368"
+  },
+  {
+    "run_id": "DenseNet121_Hyperparameter_Tuned_20261123_234941",
+    "run_name": "DenseNet121_Hyperparameter_Tuned",
+    "start_time": "2026-11-23T23:49:41.839369",
+    "tags": {
+      "project": "Axlero Diagnostic Lab Image Classification",
+      "task": "Pneumonia Triage",
+      "target_class": "PNEUMONIA",
+      "phase": "Phase 3",
+      "day": "Day 11"
+    },
+    "params": {
+      "architecture": "densenet121",
+      "pretrained": true,
+      "freeze_backbone": true,
+      "learning_rate": 0.0001,
+      "batch_size": 32,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "dropout_rate": 0.3
+    },
+    "metrics": {
+      "accuracy": 0.869,
+      "recall": 0.975,
+      "precision": 0.87,
+      "f1": 0.9189,
+      "val_loss": 0.5096
+    },
+    "epoch_history": {},
+    "artifacts": [],
+    "mlflow_run_id": "83a68db8572c4ff5b3b2d47247c40e94",
+    "end_time": "2026-11-23T23:49:41.910909"
+  },
+  {
+    "run_id": "DenseNet121_Optimized_Scheduled_20261123_234941",
+    "run_name": "DenseNet121_Optimized_Scheduled",
+    "start_time": "2026-11-23T23:49:41.914941",
+    "tags": {
+      "project": "Axlero Diagnostic Lab Image Classification",
+      "task": "Pneumonia Triage",
+      "target_class": "PNEUMONIA",
+      "phase": "Phase 3",
+      "day": "Day 12"
+    },
+    "params": {
+      "architecture": "densenet121",
+      "pretrained": true,
+      "freeze_backbone": true,
+      "learning_rate": 0.0001,
+      "batch_size": 32,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "dropout_rate": 0.3,
+      "scheduler": "ReduceLROnPlateau",
+      "early_stopping_patience": 3
+    },
+    "metrics": {
+      "accuracy": 0.885,
+      "recall": 0.903,
+      "precision": 0.943,
+      "f1": 0.9225,
+      "val_loss": 0.4736
+    },
+    "epoch_history": {},
+    "artifacts": [],
+    "mlflow_run_id": "1da957d9f349406391fe0589f2029980",
+    "end_time": "2026-11-23T23:49:42.021995"
+  }
+]
