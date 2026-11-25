@@ -1,0 +1,49 @@
+{
+  "selected_architecture": "densenet121",
+  "display_name": "DenseNet-121",
+  "status": "PRODUCTION_CANDIDATE",
+  "selection_date": "2026-11-25",
+  "mcda_score": 85.92,
+  "input_specification": {
+    "channels": 3,
+    "height": 224,
+    "width": 224,
+    "normalization": {
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ]
+    }
+  },
+  "operating_parameters": {
+    "calibrated_decision_threshold": 0.57,
+    "default_decision_threshold": 0.5,
+    "test_recall_sensitivity": 0.979,
+    "test_f1_score": 0.7717,
+    "test_roc_auc": 0.7034,
+    "test_accuracy": 0.638,
+    "classes": [
+      "NORMAL",
+      "PNEUMONIA"
+    ]
+  },
+  "explainability": {
+    "method": "Grad-CAM",
+    "target_layer": "backbone.features.denseblock4.denselayer16"
+  },
+  "deployment_checkpoints": {
+    "weights_filename": "densenet121_checkpoint.pth",
+    "weights_format": "PyTorch State Dict"
+  },
+  "phase_handoff": {
+    "phase_4_gradcam_ready": true,
+    "phase_5_fastapi_ready": true,
+    "phase_6_frontend_ready": true
+  }
+}
