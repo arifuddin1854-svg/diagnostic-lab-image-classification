@@ -1,0 +1,145 @@
+"""Interactive Grad-CAM Notebook Generator (Day 16)
+
+Axlero AI Diagnostic System
+Creates notebooks/5_gradcam.ipynb demonstrating:
+- Grad-CAM mathematical intuition
+- Model and target layer loading
+- Saliency heatmap generation and blending
+- Side-by-side clinical radiologic visualization
+"""
+
+import json
+from pathlib import Path
+
+
+def create_gradcam_notebook(output_path: Path) -> Path:
+    """Generate clean Jupyter Notebook for Grad-CAM explainability."""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    cells = [
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "# 5. Explainable AI: Grad-CAM Radiologic Saliency Visualization\n",
+                "\n",
+                "**Axlero Diagnostic Systems**  \n",
+                "**Project:** Healthcare & Medical – Diagnostic Lab Image Classification  \n",
+                "**Phase 4:** Gradient-Weighted Class Activation Mapping (Grad-CAM) on DenseNet-121."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": None,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "import sys\n",
+                "from pathlib import Path\n",
+                "\n",
+                "project_root = Path.cwd().parent if Path.cwd().name == 'notebooks' else Path.cwd()\n",
+                "if str(project_root) not in sys.path:\n",
+                "    sys.path.insert(0, str(project_root))\n",
+                "\n",
+                "import matplotlib.pyplot as plt\n",
+                "import numpy as np\n",
+                "import torch\n",
+                "\n",
+                "from src.gradcam import GradCAM\n",
+                "from src.model import build_model, get_gradcam_target_layer\n",
+                "from src.preprocessing import DEFAULT_IMAGE_SIZE, load_image, preprocess_pil_image\n",
+                "from src.utils import get_device\n",
+                "\n",
+                "device = get_device()\n",
+                "print(f\"Active Device: {device}\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## 1. Load Production DenseNet-121 Architecture & Target Conv Layer\n",
+                "Target layer: `backbone.features.denseblock4.denselayer16`."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": None,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "model = build_model(architecture='densenet121', num_classes=2, pretrained=True, freeze_backbone=True)\n",
+                "model = model.to(device)\n",
+                "target_layer = get_gradcam_target_layer(model, 'densenet121')\n",
+                "gradcam = GradCAM(model, target_layer)\n",
+                "print(\"Grad-CAM successfully initialized with target layer hooks.\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## 2. Explain Pneumonia Radiograph Prediction\n",
+                "Loads a representative pneumonia test scan and visualizes feature activation maps."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": None,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "test_pneu = project_root / 'data' / 'raw' / 'chest_xray' / 'test' / 'PNEUMONIA' / 'person100_bacteria_475.jpeg'\n",
+                "out_fig = project_root / 'reports' / 'figures' / 'gradcam_sample_pneumonia.png'\n",
+                "res = gradcam.visualize_side_by_side(test_pneu, out_fig, true_label='PNEUMONIA')\n",
+                "print(f\"Prediction: {res['predicted_class']} (Confidence: {res['confidence']*100:.1f}%)\")\n",
+                "print(f\"Risk Tier: {res['risk_tier']}\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "## 3. Explain Normal Lung Radiograph Prediction"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": None,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "test_norm = project_root / 'data' / 'raw' / 'chest_xray' / 'test' / 'NORMAL' / 'IM-0001-0001.jpeg'\n",
+                "out_norm = project_root / 'reports' / 'figures' / 'gradcam_sample_normal.png'\n",
+                "res_n = gradcam.visualize_side_by_side(test_norm, out_norm, true_label='NORMAL')\n",
+                "print(f\"Prediction: {res_n['predicted_class']} (Confidence: {res_n['confidence']*100:.1f}%)\")"
+            ]
+        }
+    ]
+
+    notebook_content = {
+        "cells": cells,
+        "metadata": {
+            "kernelspec": {
+                "display_name": "Python 3",
+                "language": "python",
+                "name": "python3"
+            },
+            "language_info": {
+                "name": "python",
+                "version": "3.8.5"
+            }
+        },
+        "nbformat": 4,
+        "nbformat_minor": 4
+    }
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(notebook_content, f, indent=2)
+    return output_path
+
+
+if __name__ == "__main__":
+    out = Path(__file__).resolve().parent.parent / "notebooks" / "5_gradcam.ipynb"
+    create_gradcam_notebook(out)
+    print(f"Created notebook: {out}")
