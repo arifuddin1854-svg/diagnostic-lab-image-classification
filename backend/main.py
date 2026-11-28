@@ -27,7 +27,8 @@ if str(base_dir) not in sys.path:
 import cv2
 from fastapi import FastAPI, File, HTTPException, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 import numpy as np
 from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel, Field
@@ -229,6 +230,7 @@ async def root():
         "version": "1.0.0",
         "status": "online",
         "endpoints": {
+            "dashboard": "/app",
             "health": "/health",
             "metadata": "/metadata",
             "predict": "/predict [POST]",
@@ -408,6 +410,18 @@ async def gradcam_image(file: UploadFile = File(...)):
         media_type="image/png",
         headers={"Content-Disposition": f"inline; filename=gradcam_{file.filename or 'overlay.png'}"},
     )
+
+
+# --- Static Files & Dashboard UI Mounting ---
+frontend_dir = base_dir / "frontend"
+if frontend_dir.exists():
+    app.mount("/app", StaticFiles(directory=str(frontend_dir), html=True), name="frontend_app")
+
+
+@app.get("/dashboard", include_in_schema=False)
+async def dashboard_redirect():
+    """Redirect /dashboard to the mounted frontend application."""
+    return RedirectResponse(url="/app/")
 
 
 if __name__ == "__main__":
